@@ -200,8 +200,8 @@
 (define-slot (plotter-controls editing-finished) ()
   (declare (connected x-fun-edit (editing-finished void)))
   (declare (connected y-fun-edit (editing-finished void)))
-  (setf (slot-value sviewer 'x-function) (eval (read-from-string (format nil "(lambda (tv) ~a)" (q+:text x-fun-edit)))))
-  (setf (slot-value sviewer 'y-function) (eval (read-from-string (format nil "(lambda (tv) ~a)" (q+:text y-fun-edit)))))
+  (setf (slot-value sviewer 'x-function) (eval (read-from-string (format nil "(lambda (tv) (handler-case (progn ~a) (t () 0.0)))" (q+:text x-fun-edit)))))
+  (setf (slot-value sviewer 'y-function) (eval (read-from-string (format nil "(lambda (tv) (handler-case (progn ~a) (t () 0.0)))" (q+:text y-fun-edit)))))
   (q+:repaint sviewer))
 
 (define-subwidget (plotter-controls control-layout) (q+:make-qvboxlayout plotter-controls)
